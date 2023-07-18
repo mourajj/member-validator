@@ -29,10 +29,10 @@ func main() {
 		log.Fatal("Error loading .env file:", err)
 	}
 
-	hostname := os.Getenv("HOSTNAME")
+	//hostname := os.Getenv("HOSTNAME")
 	protocol := os.Getenv("PROTOCOL")
 
-	listener, err := net.Listen(""+protocol+"", ""+hostname+"")
+	listener, err := net.Listen(""+protocol+"", ":9000")
 	if err != nil {
 		panic(err)
 	}
