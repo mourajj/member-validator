@@ -5,7 +5,9 @@ import (
 	"log"
 	"membervalidator/pb"
 	"net"
+	"os"
 
+	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
 )
 
@@ -18,16 +20,26 @@ func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 }
 
 func main() {
-	println("Running member validator gRPC Server")
 
-	listener, err := net.Listen("tcp", "localhost:9000")
+	// Load environment variables from .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file:", err)
+	}
+
+	hostname := os.Getenv("HOSTNAME")
+	protocol := os.Getenv("PROTOCOL")
+
+	listener, err := net.Listen(""+protocol+"", ""+hostname+"")
 	if err != nil {
 		panic(err)
 	}
+	println("Running member validator gRPC Server")
 
 	s := grpc.NewServer()
 	pb.RegisterGreeterServer(s, &Server{})
 	if err := s.Serve(listener); err != nil {
-		log.Fatalf("failed to serve", err)
+		log.Fatal("failed to serve", err)
 	}
+
 }
