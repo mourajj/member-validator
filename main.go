@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"membervalidator/pb"
 	"net"
@@ -16,6 +17,7 @@ type Server struct {
 }
 
 func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+	fmt.Println("Member " + in.GetName() + " being processed and validated")
 	return &pb.HelloReply{Message: "Member " + in.GetName() + " Validated"}, nil
 }
 
