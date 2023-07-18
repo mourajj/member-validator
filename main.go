@@ -18,6 +18,7 @@ type Server struct {
 
 func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	fmt.Println("Member " + in.GetName() + " being processed and validated")
+	//TODO: validation logic
 	return &pb.HelloReply{Message: "Member " + in.GetName() + " Validated"}, nil
 }
 
